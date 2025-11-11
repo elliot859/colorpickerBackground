@@ -1,41 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ImageLoader</title>
-    <style>
-        html, body {
-            overflow: hidden;
-            padding: 0;
-            margin: 0;
-            background-color: transparent;
-            height: 100%;
-            width: 100%;
-        }
-        
-        #dynamic-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ImageLoader</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background-color: transparent; /* 🔹 fundo transparente */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #checkbox {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      pointer-events: none; /* evita clique acidental */
+    }
+  </style>
 </head>
 <body>
-    <img id="checkbox" src="" alt="">
+  <img id="colorpickerBackground" src="" alt="imagem não encontrada">
 
-    <script>
-        function getParameterByName(name) {
-            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                results = regex.exec(location.search);
-            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-        }
+  <script>
+    // Função para ler parâmetros da URL (?image=)
+    function getParameterByName(name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+          results = regex.exec(location.search);
+      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
 
-        var imageName = getParameterByName('image');
-        if (imageName) {
-            document.getElementById('checkbox').src = 'src/' + imageName + '.png';
-        }
-    </script>
+    var imageName = getParameterByName('image');
+    var img = document.getElementById('colorpickerBackground');
+
+    // Se tiver parâmetro ?image=, usa ele
+    if (imageName) {
+      img.src = 'src/' + imageName + '.png';
+    } 
+    // Se não tiver parâmetro, carrega a padrão
+    else {
+      img.src = 'src/colorpickerBackground.png';
+    }
+  </script>
 </body>
 </html>
